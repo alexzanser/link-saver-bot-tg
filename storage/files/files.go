@@ -113,7 +113,7 @@ func (s Storage) IsExists(p *storage.Page) (bool, error) {
 		return false, e.Wrap(msg, err)
 	}
 
-
+	return true, nil 
 } 
  
 func (s Storage) decodePage(filePath string) (*storage.Page, error) {

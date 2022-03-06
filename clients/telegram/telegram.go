@@ -2,7 +2,6 @@ package telegram
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/url"
 	"path"
@@ -98,4 +97,3 @@ func (c *Client) doRequest(method string , query url.Values) (data []byte, err e
 
 	return body, nil
 }
-
