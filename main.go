@@ -5,10 +5,12 @@ import (
 	"log"
 )
 
+const (
+	tgBotHost = "api.Telegram.org"
+)
 func main() {
 
-	//token = flags.Get(token)
-	// tgClient = telegram.New(token)
+	tgClient = telegram.New(tgBotHost, mustToken())
 
 	// fetcher = fetcher.New(tgClient)
 	// processor = processor.New(tgClient)
