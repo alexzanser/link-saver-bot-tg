@@ -3,18 +3,28 @@ package main
 import (
 	"flag"
 	"log"
+
+	eventconsumer "github.com/alexzanser/telegramBotGo.git/clients/consumer/event-consumer"
+	"github.com/alexzanser/telegramBotGo.git/events/telegram"
+	tgClient "github.com/alexzanser/telegramBotGo.git/clients/telegram"
+	"github.com/alexzanser/telegramBotGo.git/storage/files"
 )
 
 const (
 	tgBotHost = "api.Telegram.org"
+	storagePath = "storage"
+	batchSize = 100
 )
 func main() {
+	tgClient := tgClient.New(tgBotHost, mustToken())
+	eventsProcessor := telegram.New(&tgClient, files.New(storagePath))
+	log.Printf("service started")
 
-	tgClient = telegram.New(tgBotHost, mustToken())
+	consumer := eventconsumer.New(eventsProcessor, eventsProcessor, batchSize)
 
-	// fetcher = fetcher.New(tgClient)
-	// processor = processor.New(tgClient)
-	// consumer.Start(fetcher, processor)
+	if err := consumer.Start(); err != nil {
+		log.Fatal("service is stopped", err)
+	}
 }
 
 func	mustToken() string {
@@ -27,4 +37,5 @@ func	mustToken() string {
 	if *token == "" {
 		log.Fatal(" token is invalid")
 	}
+	return ""
 }

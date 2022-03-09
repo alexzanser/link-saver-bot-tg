@@ -6,10 +6,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/alexzanser/telegramBotGo.git/clients/telegram"
 	"github.com/alexzanser/telegramBotGo.git/lib/e"
 	"github.com/alexzanser/telegramBotGo.git/storage"
-	"github.com/alexzanser/telegramBotGo.git/storage/files"
 )
 
 const (
@@ -22,11 +20,6 @@ func (p *Processor) doCmd(text string, chatID int, username string) error {
 	text = strings.TrimSpace(text)
 
 	log.Printf("got new command '%s' from '%s'", text, username)
-
-	//add page: 
-	//rnd page : /rnd
-	// help : /help
-	//start /start : hi + help
 
 	if isAddCmd(text) {
 		return p.savePage(chatID, text, username)
