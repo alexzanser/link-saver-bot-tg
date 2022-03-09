@@ -3,11 +3,13 @@ package files
 import (
 	"encoding/gob"
 	"errors"
+	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"time"
-	"fmt"
+
 	"github.com/alexzanser/telegramBotGo.git/lib/e"
 	"github.com/alexzanser/telegramBotGo.git/storage"
 )
@@ -62,7 +64,7 @@ func (s Storage) PickRandom(userName string ) (page *storage.Page, err error) {
 
 	path := filepath.Join(s.basePath, page.UserName)
 
-	files, err := os.ReadDir(path)
+	files, err := ioutil.ReadDir(path)
 	if err != nil {
 		return nil, err
 	}
@@ -92,6 +94,8 @@ func (s Storage) Remove(p *storage.Page) error {
 	if err := os.Remove(path); err != nil {
 		return e.Wrap(fmt.Sprintf("can't remove file %s", path), err)
 	} 
+
+	return nil
 }
 
 func (s Storage) IsExists(p *storage.Page) (bool, error) {

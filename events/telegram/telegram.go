@@ -84,6 +84,8 @@ func (p *Processor) processMessage(event events.Event) error {
 	if err != nil {
 		return e.Wrap("can't process message", err)
 	}
+
+	
 }
 
 func meta(event events.Event) (Meta, error) {
@@ -94,8 +96,6 @@ func meta(event events.Event) (Meta, error) {
 	return res, nil
 }
  
-
-
 func fetchText(upd telegram.Update) string {
 	if upd.Message  == nil {
 		return ""
