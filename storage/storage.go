@@ -4,9 +4,11 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"io"
-
+	"errors"
 	"github.com/alexzanser/telegramBotGo.git/lib/e"
 )
+
+var ErrNoSavedPages = errors.New("no saved pages")
 
 type Storage interface {
 	Save(p *Page) error

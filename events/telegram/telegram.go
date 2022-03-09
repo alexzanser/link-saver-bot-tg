@@ -76,6 +76,8 @@ func (p Processor) Process(event events.Event) error {
 	default:
 		return e.Wrap("can't procces message", ErrUnknownEventType)
 	}
+
+	return nil
 }
 
 func (p *Processor) processMessage(event events.Event) error {
@@ -85,7 +87,11 @@ func (p *Processor) processMessage(event events.Event) error {
 		return e.Wrap("can't process message", err)
 	}
 
-	
+	if err := p.doCmd(event.Text, meta.ChatID, meta.Username); err != nil {
+		return e.Wrap("can't process message", err)
+	}
+
+	return nil
 }
 
 func meta(event events.Event) (Meta, error) {
