@@ -69,7 +69,11 @@ func (p *Processor) sendRandom(chatID int, username string) (err error) {
 	defer func() {err = e.WrapIfErr("can't do command: send random page", err)} ()
 	page, err := p.storage.PickRandom(username)
 
-	if err != nil && !errors.Is(err, storage.ErrNoSavedPages){
+	if err != nil || errors.Is(err, storage.ErrNoSavedPages){
+		return p.tg.SendMessage(chatID, msgNoSavedPages)
+	}
+
+	if err != nil {
 		return p.tg.SendMessage(chatID, msgNoSavedPages)
 	}
 
@@ -77,7 +81,8 @@ func (p *Processor) sendRandom(chatID int, username string) (err error) {
 		return err 
 	}
 	
-	return p.storage.Remove(page)
+	return nil
+	// return p.storage.Remove(page)
 }
 
 func (p *Processor) sendHelp(chatID int) error {
